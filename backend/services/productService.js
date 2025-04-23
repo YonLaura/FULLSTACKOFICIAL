@@ -1,22 +1,26 @@
-// src/services/production/api.js
-// API/SERVICE.JS contains functions that interact with the backend
+const productModel = require('../models/productModels');
 
-import axios from 'axios';
+class ProductService {
+    async getProducts() {
+        return productModel.getAllProducts(); 
+    }
 
-// The API URL, base of our API
-const API_URL = "http://localhost:2000/products";
+    async getProductById(id) {
+        return productModel.getProductById(id); 
+    }
 
-// Function to get all products
-export const getProducts = () => axios.get(API_URL);
+    async addProduct(data) {
+        return productModel.createProduct(data); 
+    }
 
-// Function to get a product by its ID
-export const getProductById = (id) => axios.get(`${API_URL}/${id}`);
+    async modifyProduct(id, data) {
+        return productModel.updateProduct(id, data); 
+    }
 
-// Function to create a new product
-export const createProduct = (product) => axios.post(API_URL, product);
+    async removeProduct(id) {
+        await productModel.deleteProduct(id);
+        return { message: 'Producto eliminado' }; 
+    }
+}
 
-// Function to update a product
-export const updateProduct = (id, product) => axios.put(`${API_URL}/${id}`, product);
-
-// Function to delete a product
-export const deleteProduct = (id) => axios.delete(`${API_URL}/${id}`);
+module.exports = new ProductService();

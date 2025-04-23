@@ -1,16 +1,12 @@
-// routes/productRoutes.js
 const express = require('express');
 const router = express.Router();
-const productController = require('../controllers/productControllers');
+const productController = require('../controllers/productController');
 
-router.get('/', (req, res) => productController.getProducts(req, res));
+// Configura estas rutas
+router.get('/products', productController.getProducts); // ← Falta esta ruta
+router.get('/products/:id', productController.getProductById);
+router.post('/products', productController.createProduct);
+router.put('/products/:id', productController.updateProduct);
+router.delete('/products/:id', productController.deleteProduct);
 
-router.get('/:id', (req, res) => productController.getProductById(req, res));
-
-router.post('/', (req, res) => productController.createProduct(req, res));
-
-router.put('/:id', (req, res) => productController.updateProduct(req, res));
-
-router.delete('/:id', (req, res) => productController.deleteProduct(req, res));
-
-module.exports = router; 
+module.exports = router;
